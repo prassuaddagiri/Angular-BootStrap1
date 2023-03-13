@@ -1,0 +1,146 @@
+package SBA2;
+
+public interface Account {
+	int AccountNumber();
+	int Pin();
+	int Balance();
+
+}
+package SBA2;
+
+public interface SavingsAccount extends Account {
+	void deposit(double amount);
+	void withDraw(double amount);
+	void viewBalance();
+
+}
+package SBA2;
+
+import java.util.Scanner;
+
+public class Bank implements SavingsAccount {
+	
+	public int[] currentAccount=new int[3];
+
+	@Override
+	public int AccountNumber() {
+		// TODO Auto-generated method stub
+		return currentAccount[0];
+	}
+
+	@Override
+	public int Pin() {
+		// TODO Auto-generated method stub
+		return currentAccount[1];
+	}
+
+	@Override
+	public int Balance() {
+		// TODO Auto-generated method stub
+		return currentAccount[2];
+	}
+
+	@Override
+	public void deposit(double amount){
+		// TODO Auto-generated method stub
+	   currentAccount[2]+=amount;
+	   System.out.println("***Amount deposited***");
+
+	}
+
+	@Override
+	public void withDraw(double amount) {
+		// TODO Auto-generated method stub
+		if(amount>currentAccount[2]) {
+			System.out.println("Insufficient balance");
+		}
+		else {
+			currentAccount[2]-=amount;
+			System.out.println("***Amount Withdrawed***");
+		}
+
+	}
+
+	@Override
+	public void viewBalance() {
+		// TODO Auto-generated method stub
+		System.out.println("Your account balance is :");
+
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] a1= {897964,100000,1224};
+		int[] a2= {897954,150000,1324};
+		int[] a3= {895679,200000,2314};
+		int balance=0,withDraw,deposit;
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("_________________________");
+		System.out.println("WELCOME TO PRASANNA BANK");
+		System.out.println("_________________________");
+		System.out.println("Enter Account number:");
+		int accno = scanner.nextInt();
+		System.out.println("Enter pin:");
+		int pin = scanner.nextInt();
+		if(accno==a1[0] && pin==a1[2]) {
+			balance = a1[1];
+		}
+		else if(accno==a2[0] && pin==a2[2]) {
+			balance = a2[1];
+		}
+		else if(accno==a3[0] && pin==a3[2]) {
+			balance = a3[1];
+		}
+		else {
+			System.out.println("No...");
+		}
+		while(true) {
+			System.out.println("1.Withdraw");
+			System.out.println("2.Deposit");
+			System.out.println("3.Check balance");
+			System.out.println("4.Exit");
+			System.out.println("Choose one option you want to perform:");
+			//get choice from user
+			int choice = scanner.nextInt();
+			switch(choice)
+			{
+			case 1:
+				System.out.println("Enter Amount to withdraw:");
+				//get the withdrawal amount from user
+				withDraw = scanner.nextInt();
+				//check whether the balance is greater than or equal to the withdrawal amount
+				if(balance >= withDraw) {
+					//remove withdrawal amount from the total balance
+					balance = balance - withDraw;
+					System.out.println("Remaining balance :" +balance);
+					}
+				else {
+					//show custom error message
+					System.out.println("Insufficient Balance");
+				}
+				System.out.println(" ");
+				break;
+			case 2:
+				System.out.println("Enter Amount to be deposited:");
+				//get deposit amount from the user
+				deposit = scanner.nextInt();
+				//add the deposit amount to the total balance
+				balance = balance + deposit;
+				System.out.println("Current balance:" +balance);
+				System.out.println(" ");
+				break;
+			case 3:
+				// displaying the total balance of the user
+				System.out.println("Balance :" +balance);
+				System.out.println(" ");
+				break;
+			case 4:
+				//exit from the menu
+				System.out.println("Thank you for banking with Prasanna bank");
+				System.exit(0);
+			}
+		}
+
+	}
+
+}
